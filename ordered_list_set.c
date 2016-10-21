@@ -40,8 +40,8 @@ bool containsOLS(OrderedListSet* ols, int v){
 void insertOLS(OrderedListSet* ols, int v){
 	MyNode *newNode = getNode(v);
 	if(ols->size == 0){
-		ols->head = *newNode;
-		ols->tail = *newNode;
+		ols->head = newNode;
+		ols->tail = newNode;
 		ols->size ++;
 	}
 	else{
@@ -51,7 +51,12 @@ void insertOLS(OrderedListSet* ols, int v){
 			if((ols->head)->data > v){
 				newNode->next = ols->head;
 				(ols->head)->prev = newNode;
-				ols->head = *newNode;
+				ols->head = newNode;
+			}
+			else if(v > (ols->tail)->data){
+					newNode->prev = ols->tail;
+					(ols->tail)->next = newNode;
+					ols->tail = newNode;
 			}
 			else{
 			myNode* current = (ols->head)->next;
@@ -62,15 +67,9 @@ void insertOLS(OrderedListSet* ols, int v){
 				}			
 				else if(current->data > v){
 					newNode->prev = current->prev;
-					(current->prev)->next = *newNode;
-					current->prev = *newNode;
+					(current->prev)->next = newNode;
+					current->prev = newNode;
 					newNode->next = current;
-					inserted = true;
-				}
-				else if(v > (ols->tail)->data){
-					newNode->prev = ols->tail;
-					(ols->tail)->next = *newNode;
-					ols->tail = *newNode;
 					inserted = true;
 				}
 					
